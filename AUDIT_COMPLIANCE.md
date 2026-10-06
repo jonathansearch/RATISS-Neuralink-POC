@@ -1,57 +1,57 @@
-# 🛡️ RATISS-CORE : Manifeste d'Audit Technique & Conformité Réglementaire
+# 🛡️ RATISS-CORE: Technical Audit & Regulatory Compliance Manifest
 
-### Réf. Protocole : T-Ω: 0x7A43 | Niveau de conformité cible : FDA Class III / ISO 13485
+### Protocol Ref.: T-Ω: 0x7A43 | Target compliance level: FDA Class III / ISO 13485
 
-Ce document présente la défense technique et l'analyse de robustesse de l'architecture RATISS (V8-OMEGA & Cypher ODV) face aux contraintes strictes de l'industrie biomédicale, du portage matériel (silicium) et des environnements cliniques à haute densité de signaux.
-
----
-
-## 🔬 1. Viabilité Industrielle & Immunité Biologique (Axe V8-OMEGA)
-
-### 1.1 Robustesse face à la non-stationnarité et aux artefacts
-
-Contrairement aux réseaux de neurones artificiels (Deep Learning) qui s'effondrent face aux variations inter-patients ou aux dérives d'électrodes, le filtre LCD (Local Curvature Density) est strictement **non-paramétrique**.
-
-*   **Fondement géométrique :** Le calcul repose sur l'approximation discrète de la courbure locale (Laplacien discret). Un potentiel d'action ("spike") est traité comme une singularité topologique intrinsèque, indépendante de l'amplitude absolue du signal.
-*   **Élimination des artefacts :** Les bruits de haute tension (contractions musculaires EMG, interférences ECG) ou les dérives de basse fréquence (mouvements oculaires EOG) sont isolés. La dynamique des outliers est compressée par une fonction exponentielle bornée, protégeant le cœur du calcul d'éventuelles saturations.
-
-### 1.2 Gestion déterministe de la mémoire (Zéro OOM)
-
-Dans un flux continu haute fréquence (32 kHz sur 1024 canaux), RATISS déploie `numpy.memmap` pour la gestion des ring-buffers :
-
-*   Le mapping est aligné physiquement sur la mémoire sans allocation dynamique sur la heap, éliminant tout risque de crash par fragmentation.
-*   La consommation de la RAM reste plane et constante, garantissant une latence système inchangée, peu importe la durée de l'enregistrement biologique.
+This document presents the technical defense and robustness analysis of the RATISS architecture (V8-OMEGA & Cypher ODV) against the strict constraints of the biomedical industry, hardware porting (silicon) and clinical environments with high signal density.
 
 ---
 
-## ⚖️ 2. Déterminisme Algorithmique vs Modèles Probabilistes (Axe Cypher ODV)
+## 🔬 1. Industrial Viability & Biological Immunity (V8-OMEGA Axis)
 
-### 2.1 Explicabilité totale pour la certification FDA
+### 1.1 Robustness against non-stationarity and artifacts
 
-Le point critique des agences de certification face aux IA de masse est l'effet "boîte noire". RATISS résout ce problème par la topologie algébrique :
+Unlike artificial neural networks (Deep Learning), which collapse in the face of inter-patient variability or electrode drift, the LCD filter (Local Curvature Density) is strictly **non-parametric**.
 
-*   La convergence vers un vecteur de décision discret (`winding_class = 2`) n'est pas une estimation statistique ou une probabilité issue d'une couche Softmax.
-*   C'est la validation d'un **invariant topologique rigide** ($H_1$). Si le cycle géométrique est fermé dans l'espace de phase, l'intention motrice est mathématiquement certifiée. S'il est corrompu, l'action est rejetée. Cela élimine structurellement les risques d'hallucination algorithmique.
+*   **Geometric foundation:** The computation relies on the discrete approximation of local curvature (discrete Laplacian). An action potential ("spike") is treated as an intrinsic topological singularity, independent of the absolute amplitude of the signal.
+*   **Artifact elimination:** High-voltage noise (EMG muscle contractions, ECG interference) or low-frequency drift (EOG eye movements) are isolated. Outlier dynamics are compressed by a bounded exponential function, protecting the computation core from potential saturation.
 
-### 2.2 Implantation native sur Silicium (FPGA / ASIC)
+### 1.2 Deterministic memory management (Zero OOM)
 
-L'extracteur topologique repose exclusivement sur un algorithme d'Union-Find (comparaisons de rangs, compressions de chemins et pointeurs) :
+In a continuous high-frequency stream (32 kHz over 1024 channels), RATISS deploys `numpy.memmap` for ring-buffer management:
 
-*   **Hard-Wired Logic :** Aucune opération sur nombres flottants complexes n'est requise. La logique se traduit directement en portes logiques et registres binaires (SystemVerilog).
-*   L'algorithme s'exécute ainsi sans dépendance à un système d'exploitation tiers, éliminant les latences d'interruption et figeant le comportement du circuit pour répondre aux exigences logicielles médicales strictes (IEC 62304).
+*   The mapping is physically aligned in memory with no dynamic heap allocation, eliminating any risk of fragmentation-induced crash.
+*   RAM consumption remains flat and constant, guaranteeing unchanged system latency regardless of the duration of the biological recording.
 
 ---
 
-## 📊 3. Tableau Comparatif Stratégique
+## ⚖️ 2. Algorithmic Determinism vs Probabilistic Models (Cypher ODV Axis)
 
-| Métrique Critique | IA Statistique Classique (Cloud / Deep Learning) | Architecture Topologique RATISS (Local / Silicium) |
+### 2.1 Full explainability for FDA certification
+
+The critical issue for certification agencies facing mass-market AI is the "black box" effect. RATISS solves this problem through algebraic topology:
+
+*   The convergence towards a discrete decision vector (`winding_class = 2`) is not a statistical estimate or a probability issued from a Softmax layer.
+*   It is the validation of a **rigid topological invariant** ($H_1$). If the geometric cycle is closed in phase space, the motor intent is mathematically certified. If it is corrupted, the action is rejected. This structurally eliminates the risks of algorithmic hallucination.
+
+### 2.2 Native Silicon Implementation (FPGA / ASIC)
+
+The topological extractor relies exclusively on a Union-Find algorithm (rank comparisons, path compressions and pointers):
+
+*   **Hard-Wired Logic:** No complex floating-point operations are required. The logic translates directly into logic gates and binary registers (SystemVerilog).
+*   The algorithm thus runs with no dependency on a third-party operating system, eliminating interrupt latencies and freezing the behavior of the circuit to meet strict medical software requirements (IEC 62304).
+
+---
+
+## 📊 3. Strategic Comparison Table
+
+| Critical Metric | Conventional Statistical AI (Cloud / Deep Learning) | RATISS Topological Architecture (Local / Silicon) |
 | :--- | :--- | :--- |
-| **Latence Système** | $> 50\text{ ms}$ (Inférence + latence réseau Cloud) | **$5.8\text{ ms}$** (Sous la latence synaptique humaine) |
-| **Coût Énergétique** | Serveurs GPU massifs, infrastructures lourdes | Traitement local Edge Computing (FPGA / Jetson Orin) |
-| **Mode de Décision** | Probabiliste (Estimation de courbes et lissage) | **Déterministe** (Invariants géométriques exacts) |
-| **Calibration Patient** | Nécessite un ré-entraînement lourd (*fine-tuning*) | **Non-paramétrique** (Universel, basé sur la forme du signal) |
-| **Explicabilité (FDA)** | Faible (Effet boîte noire statistique) | **Totale** (Traçabilité par preuve topologique $H_1$) |
+| **System Latency** | $> 50\text{ ms}$ (Inference + Cloud network latency) | **$5.8\text{ ms}$** (Below human synaptic latency) |
+| **Energy Cost** | Massive GPU servers, heavy infrastructure | Local Edge Computing processing (FPGA / Jetson Orin) |
+| **Decision Mode** | Probabilistic (Curve estimation and smoothing) | **Deterministic** (Exact geometric invariants) |
+| **Patient Calibration** | Requires heavy re-training (*fine-tuning*) | **Non-parametric** (Universal, based on signal shape) |
+| **Explainability (FDA)** | Low (Statistical black-box effect) | **Total** (Traceability through topological proof $H_1$) |
 
 ---
 
-*Document de spécification technique d'architecture — RATISS Core v1.0.*
+*Architecture technical specification document — RATISS Core v1.0.*
