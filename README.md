@@ -1,52 +1,52 @@
 # ⚡ RATISS Neuralink-POC v1.0
 
-## Pipeline de Décodage Topologique Neuronal Local & Efficient
+## Local & Efficient Topological Neural Decoding Pipeline
 
-## 🌌 Présentation du Projet
+## 🌌 Project Overview
 
-RATISS (Moteur Cognitif Autonome Local) introduit un changement de paradigme dans le traitement des interfaces cerveau-machine (BCI). Contrairement aux modèles statistiques lourds et centralisés basés sur le cloud, RATISS utilise la géométrie différentielle locale en $\mathbb{R}^7$ et la topologie algébrique pour isoler et décoder l'intention motrice humaine en temps réel, localement, avec une latence stabilisée de 5.8 ms et sans surcharge mémoire grâce à un traitement via `numpy.memmap`.
+RATISS (Autonomous Local Cognitive Engine) introduces a paradigm shift in brain-computer interface (BCI) processing. Unlike heavy, centralized statistical models based on the cloud, RATISS uses local differential geometry in $\mathbb{R}^7$ and algebraic topology to isolate and decode human motor intent in real time, locally, with a stabilized latency of 5.8 ms and no memory overhead thanks to `numpy.memmap` processing.
 
-## 🛠️ Architecture du Double Cœur
+## 🛠️ Dual-Core Architecture
 
-### Module 1 (V8-OMEGA) : Filtrage par Densité de Courbure Locale (LCD)
+### Module 1 (V8-OMEGA): Local Curvature Density (LCD) Filtering
 
-Ce module est basé sur l'approximation de Ricci (Laplacien discret). Il élimine le bruit biologique de fond en préservant 100 % de la structure du signal utile (32x32x32 voxels actifs).
+This module is based on the Ricci approximation (discrete Laplacian). It removes background biological noise while preserving 100% of the useful signal structure (32x32x32 active voxels).
 
-### Module 2 (Cypher ODV) : Extracteur d'invariants topologiques (H_1)
+### Module 2 (Cypher ODV): Topological Invariant Extractor (H_1)
 
-Ce module compresse et cartographie plus de 62 000 micro-cycles neuronaux pour restituer un vecteur de décision discret stable et déterministe (`winding_class`), éliminant tout risque d'hallucination algorithmique.
+This module compresses and maps over 62,000 neural micro-cycles to produce a stable, deterministic discrete decision vector (`winding_class`), eliminating any risk of algorithmic hallucination.
 
-## 🚀 Guide d'Utilisation Rapide
+## 🚀 Quick Start Guide
 
-### Prérequis
+### Prerequisites
 
 *   Python 3.13+
 *   NumPy 2.1+
 
-### Exécution du POC
+### Running the POC
 
 ```bash
 pip install numpy
 python ratiss_core_unified.py
 ```
 
-## Interchangeable de Mouvements
+## Interchangeable Movements
 
-L'architecture géométrique de RATISS est universelle et interchangeable. Le code génère par défaut une signature toroïdale pour tester la détection de cycles, mais la fonction d'injection peut être reconfigurée à l'infini pour mapper n'importe quelle séquence motrice ou intention physique.
+RATISS's geometric architecture is universal and interchangeable. The code generates a toroidal signature by default to test cycle detection, but the injection function can be reconfigured endlessly to map any motor sequence or physical intention.
 
-### Comment modifier l'algorithme pour simuler d'autres combinaisons :
+### How to modify the algorithm to simulate other combinations:
 
-Pour changer le type de mouvement décodé, modifiez la fonction `run_v8_injection_pipeline()` en modifiant la contrainte géométrique du signal injecté dans le bloc `memmap` :
+To change the type of decoded movement, modify the `run_v8_injection_pipeline()` function by changing the geometric constraint of the signal injected into the `memmap` block:
 
-*   **Scénario A : Saisir un gobelet (Précision fine - `winding_class = 2`)**
-    Injecter un motif à forte courbure locale serrée (type double tore imbriqué ou spirale fermée) pour forcer le filtre LCD à mesurer une densité moyenne supérieure à 0.8 au centroïde.
+*   **Scenario A: Grabbing a cup (fine precision - `winding_class = 2`)**
+    Inject a tightly-wound local curvature pattern (nested double torus or closed spiral type) to force the LCD filter to measure an average density above 0.8 at the centroid.
 
-*   **Scénario B : Porter le verre à la bouche (Mouvement combiné - `winding_class = 1`)**
-    Générer un déplacement sinusoïdal couplé le long des axes dimensionnels dans l'espace $\mathbb{R}^7$ pour simuler la transition spatio-temporelle de l'approche ("reach").
+*   **Scenario B: Bringing a glass to the mouth (combined movement - `winding_class = 1`)**
+    Generate a coupled sinusoidal displacement along the dimensional axes in $\mathbb{R}^7$ space to simulate the spatio-temporal transition of the approach ("reach").
 
-*   **Scénario C : S'asseoir / Se détendre (Repos / Neutre - `winding_class = 0`)**
-    Réduire l'amplitude du signal utile pour laisser agir le bruit gaussien ambiant. Le filtre LCD abaissera la densité sous le seuil d'émanation $\epsilon$, confirmant l'absence de contraction volontaire ou d'intention motrice active.
+*   **Scenario C: Sitting down / Relaxing (rest / neutral - `winding_class = 0`)**
+    Reduce the amplitude of the useful signal to let the ambient Gaussian noise act. The LCD filter will lower the density below the emanation threshold $\epsilon$, confirming the absence of voluntary contraction or active motor intent.
 
-En ajustant les équations géométriques de la matrice d'entrée (formes géodésiques, densité de points), le cœur topologique calculera automatiquement la persistance (birth / death) adaptée pour piloter un effecteur robotique, une prothèse, ou être directement injecté dans une puce embarquée (type FPGA / NPU).
+By adjusting the geometric equations of the input matrix (geodesic shapes, point density), the topological core will automatically compute the appropriate persistence (birth / death) to drive a robotic effector, a prosthesis, or be injected directly into an embedded chip (FPGA / NPU type).
 
-Développé de manière autonome par Jonathan (Architecte Logiciel).
+Independently developed by Jonathan (Software Architect).
